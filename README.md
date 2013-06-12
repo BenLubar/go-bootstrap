@@ -3,8 +3,8 @@ go-bootstrap
 When this script is run:
 * Go's source code is downloaded to or updated in your `$GOROOT`.
 * Compilers for the following OS/ARCH combinations are built: linux/386 linux/amd64 linux/arm
-  windows/386 windows/amd64 darwin/386 darwin/amd64 plan9/386 plan9/amd64 freebsd/386
-  freebsd/amd64 freebsd/arm netbsd/386 netbsd/amd64 netbsd/arm openbsd/386 openbsd/amd64
+  windows/386 windows/amd64 darwin/386 darwin/amd64 <strike>plan9/386 plan9/amd64</strike> freebsd/386
+  freebsd/amd64 freebsd/arm <strike>netbsd/386 netbsd/amd64 netbsd/arm</strike> openbsd/386 openbsd/amd64
 * The standard library is cross-compiled using each of the newly-built compilers.
 * If the host OS is linux, windows, or darwin (Mac OS), and the architecture is amd64, a race-
   detection instrumented standard library and compiler suite are built for the native OS/ARCH.

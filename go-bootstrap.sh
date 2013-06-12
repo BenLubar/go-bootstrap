@@ -51,22 +51,39 @@ arm)   mflag=-marm ;;
 esac
 
 each_os_arch() {
+	echo linux/386
 	GOOS=linux    GOARCH=386    $1
+	echo linux/amd64
 	GOOS=linux    GOARCH=amd64  $1
+	echo linux/arm
 	GOOS=linux    GOARCH=arm    $1
+	echo windows/386
 	GOOS=windows  GOARCH=386    $1
+	echo windows/amd64
 	GOOS=windows  GOARCH=amd64  $1
+	echo darwin/386
 	GOOS=darwin   GOARCH=386    $1
+	echo darwin/amd64
 	GOOS=darwin   GOARCH=amd64  $1
-	GOOS=plan9    GOARCH=386    $1
-	GOOS=plan9    GOARCH=amd64  $1
+	#echo plan9/386
+	#GOOS=plan9    GOARCH=386    $1
+	#echo plan9/amd64
+	#GOOS=plan9    GOARCH=amd64  $1
+	echo freebsd/386
 	GOOS=freebsd  GOARCH=386    $1
+	echo freebsd/amd64
 	GOOS=freebsd  GOARCH=amd64  $1
+	echo freebsd/arm
 	GOOS=freebsd  GOARCH=arm    $1
-	GOOS=netbsd   GOARCH=386    $1
-	GOOS=netbsd   GOARCH=amd64  $1
-	GOOS=netbsd   GOARCH=arm    $1
+	#echo netbsd/386
+	#GOOS=netbsd   GOARCH=386    $1
+	#echo netbsd/amd64
+	#GOOS=netbsd   GOARCH=amd64  $1
+	#echo netbsd/arm
+	#GOOS=netbsd   GOARCH=arm    $1
+	echo openbsd/386
 	GOOS=openbsd  GOARCH=386    $1
+	echo openbsd/amd64
 	GOOS=openbsd  GOARCH=amd64  $1
 }
 
@@ -93,13 +110,13 @@ esac
 
 echo "# Bootstrapping cross compilers."
 dist_install_runtime() {
-	"$GOTOOLDIR"/dist install pkg/runtime
+	GOOS=$GOOS GOARCH=$GOARCH "$GOTOOLDIR"/dist install pkg/runtime
 }
 each_os_arch dist_install_runtime
 
 echo "# Cross-compiling packages and commands."
 cross_compile_packages() {
-	"$GOTOOLDIR"/go_bootstrap install $GO_FLAGS -ccflags "$GO_CCFLAGS" -gcflags "$GO_GCFLAGS" -ldflags "$GO_LDFLAGS" std
+	GOOS=$GOOS GOARCH=$GOARCH "$GOTOOLDIR"/go_bootstrap install $GO_FLAGS -ccflags "$GO_CCFLAGS" -gcflags "$GO_GCFLAGS" -ldflags "$GO_LDFLAGS" std
 }
 each_os_arch cross_compile_packages
 
@@ -113,7 +130,7 @@ linux-amd64|windows-amd64|darwin-amd64)
 	GOOS=$GOHOSTOS GOARCH=$GOHOSTARCH "$GOROOT"/bin/go install -race ...
 esac
 install_dotdotdot() {
-	"$GOROOT"/bin/go install ...
+	GOOS=$GOOS GOARCH=$GOARCH "$GOROOT"/bin/go install ...
 }
 each_os_arch install_dotdotdot
 GOOS=$GOHOSTOS GOARCH=$GOHOSTARCH install_dotdotdot
